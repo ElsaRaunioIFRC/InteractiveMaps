@@ -35,31 +35,6 @@ var bgMap = icrc_light;
 map.addLayer(bgMap);            // add initial backgroundmap-layer to map
 bgMap.bringToBack();            // move backgroundmap-Layer to to the background of the map
 
-function fct_blend() {
-  valBlend = document.getElementById("id_sliderBlend").value;
-  document.getElementById("id_valBlend").innerHTML = Number(valBlend).toFixed(1)
-  fgMap.setOpacity(valBlend);
-}
- 
-var ctr_blend = L.control();
-ctr_blend.onAdd = function (map) {
-    valOpacity = 1;
-    this.div = L.DomUtil.create('div');
-    this.div.innerHTML = '<span id="id_valBlend">1.0</span><input type="range" id="id_sliderBlend" min="0" max="1" step="0.1" value="1" style="width:100px;" oninput="fct_blend()">';
-    L.DomEvent.disableClickPropagation(this.div);
-    return this.div;
-};
-ctr_blend.addTo(map);
-
-var fct_layerchange = function (e) {
-    bgMap = fgMap;
-    bgMap.setOpacity(1);         // set opacity of former foregroundmap-layer which is now background-layer to 1.0;
-    map.addLayer(bgMap);         // add former foregroundmap-layer as backgroundmap-layer to map again. 
-    fgMap = e.layer;             // update fgMap-variable with the actual foregroundmap-layer
-    fgMap.setOpacity(valBlend);  // set opacity of the new foregroundmap-layer to the actual blend-Value.
-};
-
-map.on('baselayerchange', fct_layerchange);
 
 </script>
 </body>
